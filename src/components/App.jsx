@@ -12,7 +12,7 @@ export const App = () => {
     const contacts = localStorage.getItem('contacts');
     const parsedContact = JSON.parse(contacts);
     if (parsedContact) {
-      setContacts(parsedContact);
+      setContacts(() => parsedContact);
     }
   }, []);
 
@@ -27,16 +27,6 @@ export const App = () => {
     setContacts(prevContact =>
       prevContact.filter(contact => contact.id !== contactId)
     );
-  };
-  const createContact = data => {
-    console.log(data);
-  };
-  const isExist = name => {
-    const isExist = contacts.some(contact => contact.name === name);
-    if (isExist) {
-      alert(`${name} is already in contacts.`);
-      return;
-    }
   };
 
   const addContact = ({ name, number }) => {
@@ -75,12 +65,7 @@ export const App = () => {
       }}
     >
       <h1>Phonebook</h1>
-      <ContactForm
-        // onInputChange={this.onInputChange}
-        // contacts={this.state.contacts}
-        addContact={addContact}
-        // isExist={this.isExist}
-      />
+      <ContactForm addContact={addContact} />
       <h3>Contacts</h3>
       <Filter value={filter} onChange={onInputChange} />
       <ContactList props={visibleList} deleteContact={deleteContact} />
